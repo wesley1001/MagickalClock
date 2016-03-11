@@ -1,5 +1,5 @@
 'use strict';
-var suncalc = require("./suncalc.js");
+var planetaryHours = require("./Modules/planetary_hours.js");
 
 var React = require('react-native');
 var {
@@ -9,9 +9,12 @@ var {
   Component
 } = React;
 // Today in Baltimore, MD
-var date = new Date();
+var dateNow = new Date();
+var tzOffsetMinutes = dateNow.getTimezoneOffset();
+//var UTCDate = dateNow.setUTCHours((tzOffsetMinutes / 60) * -1);
 var lat = 39.2;
 var lng = -76.6;
+var timezone = 'America/New York';
 
 var styles = StyleSheet.create({
   description: {
@@ -29,15 +32,18 @@ var styles = StyleSheet.create({
 
 class Hours extends Component {
   render() {
-    var result = suncalc.calc(date, lat, lng);
-    var sunrise = this.toJSONLocal(result.sunrise);
-    var sunset = this.toJSONLocal(result.sunset);
+    planetaryHours.calculateTimes(dateNow, lat, lng, timezone);
+    var sunrise = this.toJSONLocal(planetaryHours.getSunriseTime());
+    var sunset = this.toJSONLocal(planetaryHours.getSunsetTime());
+    var ruler = planetaryHours.getPlanetaryRuler();
     return (
       <View style={styles.container}>
         <Text style={styles.description}>
-          This is the Hours tab.{'\n'}
-          Sunrise: {sunrise}{'\n'}
-          Sunset: {sunset}
+          This is the Hours tab.{'\n\n'}
+          Today in Baltimore:{'\n'}
+          Sunrise is at {sunrise}{'\n'}
+          Sunset at {sunset}{'\n'}
+          The ruling planet is {ruler}
         </Text>
       </View>
     );
@@ -48,5 +54,4 @@ class Hours extends Component {
   	return local.toJSON().slice(11, -1);
   }
 }
-
 module.exports = Hours;
