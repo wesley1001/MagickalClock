@@ -10,11 +10,9 @@ var {
 } = React;
 // Today in Baltimore, MD
 var dateNow = new Date();
-var tzOffsetMinutes = dateNow.getTimezoneOffset();
-//var UTCDate = dateNow.setUTCHours((tzOffsetMinutes / 60) * -1);
 var lat = 39.2;
 var lng = -76.6;
-var timezone = 'America/New York';
+var timezone = 'America/New_York';
 
 var styles = StyleSheet.create({
   description: {

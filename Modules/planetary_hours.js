@@ -1,6 +1,8 @@
 /*  PlanetaryHours calculates day and evening hours
 *   based on time between sunrise and sunset.
 */
+var moment = require('moment-timezone');
+
 var suncalc = require("./suncalc.js");
 var planets = [ 'Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn' ];
 
@@ -16,6 +18,9 @@ var PlanetaryHours = {
   darkMinutes: null,
   planetaryDayRuler: null,
   calculateTimes(date, lat, lng, timezoneString) {
+    // var tzOffsetMinutes = date.getTimezoneOffset();
+    // var UTCDate = date.setUTCHours((tzOffsetMinutes / 60) * -1);
+    var a = moment.tz(date.getTime(), 'Europe/London');
     var times = suncalc.getTimes(date, lat, lng);
     this.sunriseTime = times.sunrise;
     this.sunsetTime = times.sunset;
