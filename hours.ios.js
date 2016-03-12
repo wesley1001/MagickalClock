@@ -31,8 +31,8 @@ var styles = StyleSheet.create({
 class Hours extends Component {
   render() {
     planetaryHours.calculateTimes(dateNow, lat, lng, timezone);
-    var sunrise = this.toJSONLocal(planetaryHours.getSunriseTime());
-    var sunset = this.toJSONLocal(planetaryHours.getSunsetTime());
+    var sunrise = planetaryHours.getSunriseTime();
+    var sunset = planetaryHours.getSunsetTime();
     var ruler = planetaryHours.getPlanetaryRuler();
     return (
       <View style={styles.container}>
@@ -45,11 +45,6 @@ class Hours extends Component {
         </Text>
       </View>
     );
-  }
-  toJSONLocal (date) {
-  	var local = new Date(date);
-  	local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-  	return local.toJSON().slice(11, -1);
   }
 }
 module.exports = Hours;
